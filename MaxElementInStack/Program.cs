@@ -1,4 +1,4 @@
-﻿namespace MaxElementInStack
+﻿namespace LinearSearch
 {
     using System;
 
@@ -6,53 +6,42 @@
     {
         static void Main(string[] args)
         {
-            var inputArray = new int[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            var inputArray = new int[] { 2, 3, 4, 10, 40 };
 
-            Console.WriteLine("Rotation Index");
-            var abc = int.TryParse(Console.ReadLine(), out var rotIdx);
+            Console.WriteLine("Enter the number to search");
+            var isNumber = int.TryParse(Console.ReadLine(), out var item);
 
-            if(rotIdx > 0)
+            if (!isNumber)
             {
-                var rotatedArray = Rotation(rotIdx, inputArray);
-                for (int i = 0; i < rotatedArray.Length; i++)
-                {
-                    Console.Write(rotatedArray[i] + ", ");
-                }
+                Console.WriteLine("Please enter a valid number to search");
             }
             else
             {
-                Console.WriteLine("Invalid Input");
+                var index = LinearSearch(item, inputArray);
+                if(index == -1)
+                {
+                    Console.WriteLine("Sorry! The item was not found in the array");
+                }
+                else
+                {
+                    Console.WriteLine($"We found the item at position {index + 1}");
+                }
             }
 
             Console.WriteLine();
         }
 
-        static int[] Rotation(int rotateIndex, int[] arr1)
+        static int LinearSearch(int item, int[] arr1)
         {
-            var arrayLength = arr1.Length;
-            var arr2 = new int[arrayLength];
-            
-            var rIdx = rotateIndex % arrayLength;
-
-            if (rIdx == 0)
+            for (int i = 0; i < arr1.Length; i++)
             {
-                return arr1;
-            }
-
-            int lastIndex = arrayLength - rIdx;
-            for (int i = 0; i < arrayLength; i++)
-            {
-                if (i < rIdx)
+                if(arr1[i] == item)
                 {
-                    arr2[lastIndex++] = arr1[i];
-                }
-                else
-                {
-                    arr2[i - rIdx] = arr1[i];
+                    return i;
                 }
             }
 
-            return arr2;
+            return -1;
         }
     }
 }
